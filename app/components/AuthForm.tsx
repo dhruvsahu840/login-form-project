@@ -8,9 +8,8 @@ export default function AuthForm({
   type: "login" | "signup";
   onSwitch: () => void;
 }) {
-  // ✅ State to store input values
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
   });
@@ -18,18 +17,26 @@ export default function AuthForm({
   // ✅ Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitting form:", formData); // Debug log
 
     const endpoint = type === "signup" ? "/api/signup" : "/api/login";
 
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    const dataToSend =
+      type === "signup"
+        ? formData
+        : { email: formData.email, password: formData.password };
 
-    const msg = await res.text();
-    alert(msg);
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataToSend),
+      });
+
+      const msg = await res.text();
+      alert(msg);
+    } catch (err) {
+      alert("Something went wrong");
+    }
   };
 
   return (
@@ -38,16 +45,15 @@ export default function AuthForm({
         {type === "login" ? "Login to your account" : "Create an account"}
       </h2>
 
-      {/* ✅ Added handleSubmit to form */}
       <form className="space-y-5" onSubmit={handleSubmit}>
         {type === "signup" && (
           <input
             type="text"
             placeholder="Username"
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={formData.name}
+            value={formData.username}
             onChange={(e) =>
-              setFormData({ ...formData, name: e.target.value })
+              setFormData({ ...formData, username: e.target.value })
             }
             required
           />
