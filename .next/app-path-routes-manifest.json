@@ -1,7 +1,7 @@
 {
-  "/api/signup/route": "/api/signup",
   "/favicon.ico/route": "/favicon.ico",
-  "/_not-found/page": "/_not-found",
+  "/api/signup/route": "/api/signup",
   "/api/login/route": "/api/login",
+  "/_not-found/page": "/_not-found",
   "/page": "/"
 }
