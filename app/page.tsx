@@ -1,25 +1,63 @@
 "use client";
+
 import { useState } from "react";
 import Header from "./components/Header";
 import AuthForm from "./components/AuthForm";
+import ShowUsers from "./components/showusers";
 
-export default function Home() {
-  const [formType, setFormType] = useState<"login" | "signup" | null>(null);
 
-  const handleFormChange = (type: "login" | "signup") => {
-    setFormType(type);
+type User = {
+    _id: string;
+    username: string;
+    email: string;
   };
+export default function Home() {
 
-  const handleSwitch = () => {
-    setFormType((prev) => (prev === "login" ? "signup" : "login"));
+  
+  const [formType, setFormType] = useState<"login" | "signup" | "cards" |null>();
+  const [user, setUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+
+  const handleFetchUsers = async () => {
+    try {
+      const res = await fetch("/api/user");
+      const data = await res.json();
+      setUsers(data);
+      setFormType("cards");
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+    }
   };
 
   return (
-    <div>
-      <Header onFormChange={handleFormChange} />
-      <main className="min-h-[calc(100vh-64px)] bg-gray-100 px-4 py-10">
-        {formType && <AuthForm type={formType} onSwitch={handleSwitch} />}
-      </main>
-    </div>
+    <main className="min-h-screen bg-gray-100">
+      <Header
+       onFormChange={setFormType} 
+       onFetchUsers={handleFetchUsers}
+      />
+
+
+      {formType === "login" && (
+        <AuthForm
+          type="login"
+          onSwitch={() => setFormType("signup")}
+          onFormChange={setFormType}
+          setUser={setUser}
+        />
+      )}
+
+      {formType === "signup" && (
+        <AuthForm
+          type="signup"
+          onSwitch={() => setFormType("login")}
+          onFormChange={setFormType}
+          setUser={setUser}
+        />
+      )}
+
+
+      {formType === "cards" && <ShowUsers users={users} />}
+
+    </main>
   );
 }
