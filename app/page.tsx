@@ -30,8 +30,8 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-100">
-      <Header
+    <main className="min-h-screen bg-gray-100 bg-[#106EBE] ">
+      <Header 
        onFormChange={setFormType} 
        onFetchUsers={handleFetchUsers}
       />
