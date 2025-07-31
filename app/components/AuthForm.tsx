@@ -15,12 +15,7 @@ type User = {
   email: string;
 };
 
-export default function AuthForm({
-  type,
-  onSwitch,
-  onFormChange,
-  setUser,
-}: AuthFormProps) {
+export default function AuthForm({  type, onSwitch,onFormChange, setUser,}: AuthFormProps) {
   const [formData, setFormData] = useState<{
     username: string;
     email: string;
@@ -45,7 +40,7 @@ export default function AuthForm({
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSend),
       });
 
       const result: User | { error: string } = await res.json();
@@ -107,7 +102,7 @@ export default function AuthForm({
           required
         />
         <button
-          type="submit"
+          type="submit" 
           className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
         >
           {type === "login" ? "Login" : "Sign Up"}

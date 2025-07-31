@@ -17,7 +17,7 @@ export default function Header({
         <div className="flex items-center justify-between">
           {/* Logo */}
           <h1 className="text-2xl font-bold text-blue-700 tracking-tight">
-            My <span className="text-neutral-900">Next.js</span> App
+            My <span className="text-neutral-900">Next.js</span> App 
           </h1>
 
           {/* Desktop Buttons */}

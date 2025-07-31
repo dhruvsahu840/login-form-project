@@ -1,4 +1,3 @@
-				
 import { NextResponse } from "next/server";
 import { connectToDB } from "@/lib/mongodb";
 import User from "@/models/User";
@@ -27,7 +26,6 @@ export async function POST(req: Request) {
 
     console.log("✅ Login successful");
 
-    // ✅ Send back full user data
     return NextResponse.json({
       _id: user._id,
       username: user.username,
